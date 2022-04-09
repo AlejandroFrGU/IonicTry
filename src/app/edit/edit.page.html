@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <!-- <ion-button [routerLink]="['../']">Ba</ion-button> Back button on hand-->
+    </ion-buttons>
+    <ion-title>Edit {{args}}</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-breadcrumbs>
+    <ion-breadcrumb href="">Home</ion-breadcrumb>
+    <ion-breadcrumb href="tabs/{{args}}"> {{ args | titlecase }}</ion-breadcrumb>
+    <ion-breadcrumb href="tabs/{{args}}/list"> List</ion-breadcrumb>
+    <ion-breadcrumb href="tabs/{{args}}/list/edit"> Edit</ion-breadcrumb>
+
+    <div id="container">
+      <h1><b>Edit client</b></h1>
+      <p>Here you can edit your client  </p>
+      <ion-button href="">Inicio</ion-button>
+
+    </div>
+  </ion-breadcrumbs>
+</ion-content>

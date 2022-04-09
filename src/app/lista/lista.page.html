@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <!-- <ion-button [routerLink]="['../']">Ba</ion-button> Back button on hand-->
+    </ion-buttons>
+    <ion-title>List {{args}}</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-breadcrumbs>
+    <ion-breadcrumb href="">Home</ion-breadcrumb>
+    <ion-breadcrumb href="tabs/{{args}}"> {{ args | titlecase }}</ion-breadcrumb>
+    <ion-breadcrumb href="tabs/{{args}}/list"> List</ion-breadcrumb>
+  </ion-breadcrumbs>
+  <ion-list>
+    <ion-list-header><strong>List of {{args}}</strong></ion-list-header>
+    <ion-item *ngFor="let element of list">
+      <ion-label>
+        <h2>{{ element.id }}: {{ element.name }} 
+        </h2>
+        <h3>{{ element.description }}</h3>
+
+      </ion-label>
+      <ion-button *ngIf="args === 'clients'" [routerLink]="['./edit']" color="warning">Edit</ion-button>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

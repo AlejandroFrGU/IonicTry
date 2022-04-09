@@ -1,0 +1,50 @@
+name: Build-test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: dependencies install
+      run: npm ci
+    - name: project build
+      run: npm run build --prod
+    - name: capacitor sync
+      run: npx cap sync
+    - name: run tests
+      run: npm run test-headless
+    - name: test coverage upload
+      uses: actions/upload-artifact@v2
+      if: success() || failure()
+      with:
+        name: test-coverage
+        path: ./coverage/
+    - name: eslint check
+      run: ng lint
+    - name: eslint fix
+      run: ng lint --fix
+
+    - uses: actions/checkout@v3
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with android
+      run: ionic capacitor build android
